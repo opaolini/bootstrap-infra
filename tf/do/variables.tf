@@ -1,3 +1,7 @@
+# DO Variables
+#
+variable "do_token" {}
+
 # Cluster Variables
 #
 variable "cluster_name" {

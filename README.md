@@ -67,5 +67,5 @@ The folder structure is grouped as follows:
 
 # TODOs
 
-- [] Create some basic setup scripts and/or CLI tools to automate all of the bootstrapping phase (especially locally)
-- [] Describe pushing docker / images workflow with local deployment
+- [ ] Create some basic setup scripts and/or CLI tools to automate all of the bootstrapping phase (especially locally)
+- [ ] Describe pushing docker / images workflow with local deployment
