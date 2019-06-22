@@ -130,7 +130,7 @@ kubectl port-forward efk-kibana-d7b549b5c-n7b82 5601 -n logging
 
 For local development, once you install all the requests
 
-## Proper Setup (AWS EKS Example)
+## Production Setup (AWS EKS Example)
 
 Setup the cluster using the provided terraform configs from the major cloud providers (or add your own). All the outputs from the terraform configs include the guide on how to setup `kubectl` for the deployed cluster.
 
@@ -189,7 +189,7 @@ After that, we will be launching the `EFK` stack:
 helm install --name efk \
     --namespace logging \
     ./charts/efk \
-    -f ./env/elastic/values.minikube.yaml
+    -f ./env/elastic/values.yaml
 ```
 
 This also deploys an elasticsearch-curator which purges the indices every 7 days. This is configurable in `values.yaml`. 
