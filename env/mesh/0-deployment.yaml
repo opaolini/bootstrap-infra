@@ -1,0 +1,52 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: mesh
+  name: mesh
+  namespace: mesh
+spec:
+  template:
+    metadata:
+      labels:
+        app: mesh
+    spec:
+      containers:
+        - image: "0xorg/mesh:0.0.4-alpha"
+          name: mesh
+          ports:
+            - containerPort: 60557
+              name: rpc
+            - containerPort: 60558
+              name: p2p
+          env:
+            - name: ETHEREUM_NETWORK_ID
+              value: "1"
+            - name: ETHEREUM_RPC_URL
+              value: "https://mainnet.infura.io/v3/a9a23d2566e542629179d6372ace13c9"
+            - name: VERBOSITY
+              value: "5"
+            - name: PRIVATE_KEY_PATH
+              value: ""
+            - name: USE_BOOTSTRAP_LIST
+              value: "false"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mesh
+  namespace: mesh
+  labels:
+    app: mesh
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    name: p2p
+    port: 60558
+    targetPort: 60558
+  - protocol: TCP
+    name: rpc
+    port: 60557
+    targetPort: 60557
+

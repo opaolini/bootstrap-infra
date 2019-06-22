@@ -1,0 +1,10 @@
+apiVersion: v1
+description: A Helm chart for Elasticsearch operator
+name: elasticsearch-operator
+version: 0.1.7
+appVersion: 0.3.0
+sources:
+- https://github.com/upmc-enterprises/elasticsearch-operator
+- https://github.com/komljen/helm-charts
+maintainers:
+- name: opaolini

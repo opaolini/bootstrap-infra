@@ -1,0 +1,13 @@
+name: efk
+version: 0.3.4
+appVersion: 6.4.2
+description: EFK stack
+keywords:
+- elasticsearch
+- kibana
+- fluent-bit
+- filebeat
+sources:
+- https://github.com/komljen/helm-charts
+maintainers:
+- name: opaolini
