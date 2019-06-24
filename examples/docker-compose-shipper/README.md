@@ -3,7 +3,13 @@ About
 
 This `docker-compose` file spins up a [0x-mesh](https://github.com/0xProject/0x-mesh) with a preconfigured logging driver as well as a `fluentbit` logger which ships the logs to a ES-cluster running on minikube.
 
-To enable this example, we need to first port-forward the `elasticsearch-client` for it to be available
+To enable this example, we need to first port-forward the `elasticsearch-client` for it to be available:
+```
+kubectl get pods -n logging | grep client
+```
+```
+kubectl port-forward -n logging es-client-****** 9200
+```
 
 ## dockerhost container
 
