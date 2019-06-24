@@ -71,12 +71,34 @@ helm install stable/grafana \
      --set service.type=LoadBalancer
 ```
 
-Access it via port-forward:
+After installing the chart, you can grab the pod name:
+
 ```
-k port-forward -n grafana grafana-9995876cc-j2kdz 3000 
+kubectl get pods -n grafana
+.
+.
+.
+NAME                      READY   STATUS    RESTARTS   AGE
+grafana-9995876cc-j2kdz   1/1     Running   1          1m
+
+```
+
+Access it via port-forwarding `3000`, which in the above case is `grafana-9995876cc`:
+```
+kubectl port-forward -n grafana POD_NAME 3000 
 ```
 
 You can import a custom dashboard that will display basic cluster health: https://grafana.com/dashboards/6417
+
+To do so navigate to http://localhost:3000, on the hover menu import a dashboard:
+![Importing Dashboard](resources/images/dashboard_import.png)
+
+Fill in the `ID` and the datasource:
+![ID](resources/images/dashboard_id.png)
+
+
+![ID](resources/images/dashboard_datasource.png)
+
 
 ### Elasticsearch 
 
@@ -94,9 +116,9 @@ After that you should see, that the [CustomResourceDefinition](https://kubernete
 ➜  bootstrap-infra git:(master) ✗ kubectl get CustomResourceDefinitions
 NAME                                         CREATED AT
 elasticsearchclusters.enterprises.upmc.com   2019-06-22T11:44:46Z
-➜  bootstrap-infra git:(master) ✗ k get elasticsearchclusters
+➜  bootstrap-infra git:(master) ✗ kubectl get elasticsearchclusters
 No resources found.
-➜  bootstrap-infra git:(master) ✗ k get foo
+➜  bootstrap-infra git:(master) ✗ kubectl get foo
 error: the server doesn't have a resource type "foo"
 ```
 
@@ -121,18 +143,37 @@ fluent-bit-wlv62                         1/1     Running             0          
 
 This also deploys an elasticsearch-curator which purges the indices every 7 days. This is configurable in `values.yaml`. 
 
-You can access the deployed kibana like so:
+You can access the deployed kibana by grabbing the name and port-forwarding like in the case of grafana like so:
 ```
 kubectl port-forward efk-kibana-d7b549b5c-n7b82 5601 -n logging 
 ```
 
+After that, you will be asked to create an index pattern and select a time filter. You can use `kube*` to match across all indices (which come in as `kubernetes_cluster-YYYY.MM.DD`) and `@timestamp` for the filter:
+
+![Indices](resources/images/kibana_indices.png)
 
 
-For local development, once you install all the requests
+![Filter](resources/images/kibana_time.png)
+
+
+### Cleaning Up
+
+To stop the `minikube` cluster:
+```
+minikube stop
+```
+
+And to clean it up and delete the artifacts:
+```
+minikube delete
+```
 
 ## Production Setup (AWS EKS Example)
 
 Setup the cluster using the provided terraform configs from the major cloud providers (or add your own). All the outputs from the terraform configs include the guide on how to setup `kubectl` for the deployed cluster.
+
+### Terraform
+From 
 
 ### Helm Initialization
 ```bash

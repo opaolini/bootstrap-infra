@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  ganache:
+    image: 0xorg/mesh-ganache-cli
+    ports:
+      - "8545:8545"
+  mesh:
+    image: 0xorg/mesh:latest
+    logging:
+        driver: fluentd
+        options:
+            fluentd-address: localhost:24224
+    volumes:
+      - ./data:/usr/mesh/0x_mesh
+    links:
+      - ganache
+      - fluentbit
+    ports:
+      - "8080:60557"
+      - "3000:3000"
+    environment:
+      - ETHEREUM_NETWORK_ID=50
+      - ETHEREUM_RPC_URL=http://ganache:8545
+      - VERBOSITY=5
+      - RUN_TELEMETRY=true
+      - BLOCK_POLLING_INTERVAL=5s
+  fluentbit:
+      image: fluent/fluent-bit:1.0.4
+      ports:
+        - "24224:24224"
+      command: /fluent-bit/bin/fluent-bit -c /fluent-bit/etc/fluent-bit.conf
+      volumes:
+        - ./fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+  dockerhost:
+    image: qoomon/docker-host
+    cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
+    restart: on-failure
