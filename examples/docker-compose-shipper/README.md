@@ -17,6 +17,10 @@ If running on MacOS you [cannot use the host network](https://docs.docker.com/ne
 
 Refer to: https://github.com/qoomon/docker-host
 
+## es-auth-proxy TODO
+
+Inside the docker-compose we have a forwarding proxy, that will use the node's privatekey to sign requests to elasticsearch. 
+
 
 ## TODOs
 
