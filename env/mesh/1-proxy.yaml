@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: es-proxy
+  name: es-proxy
+  namespace: logging
+spec:
+  template:
+    metadata:
+      labels:
+        app: es-proxy
+    spec:
+      containers:
+        - image: "overmorrow/auth-es-proxy:latest"
+          name: es-proxy
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3333
+              name: http
+          env:
+            - name: PORT
+              value: "3333"
+            - name: REMOTE_ADDRESS
+              value: "http://elasticsearch-efk-cluster:9200/_bulk"
+            - name: OUTPUT_SIGNING
+              value: "false"
+            - name: INPUT_VALIDATION
+              value: "true"
+            - name: ALLOWED_IDS
+              value: "036a775c4db73fd351191d0a0e19862ecbb70cbe2626097adfb70ffd4f9ea081bf"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: es-proxy
+  namespace: logging
+  labels:
+    app: es-proxy
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    name: http
+    port: 3333
+    targetPort: 3333
+
