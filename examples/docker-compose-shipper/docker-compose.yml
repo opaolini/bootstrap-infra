@@ -41,7 +41,7 @@ services:
       - ./data/key:/app/key
     environment:
       - PORT=3333
-      - REMOTE_ADDRESS=http://dockerhost:9200/_bulk
+      - REMOTE_ADDRESS=http://dockerhost:3334/_bulk
       - INPUT_VALIDATION=false
       - OUTPUT_SIGNING=true
       - PRIVATE_KEY_PATH=/app/key/privkey

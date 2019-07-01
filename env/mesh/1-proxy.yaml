@@ -16,11 +16,11 @@ spec:
           name: es-proxy
           imagePullPolicy: Always
           ports:
-            - containerPort: 3333
+            - containerPort: 3334
               name: http
           env:
             - name: PORT
-              value: "3333"
+              value: "3334"
             - name: REMOTE_ADDRESS
               value: "http://elasticsearch-efk-cluster:9200/_bulk"
             - name: OUTPUT_SIGNING
@@ -42,6 +42,6 @@ spec:
   ports:
   - protocol: TCP
     name: http
-    port: 3333
-    targetPort: 3333
+    port: 3334
+    targetPort: 3334
 
