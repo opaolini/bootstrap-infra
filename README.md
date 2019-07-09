@@ -22,6 +22,7 @@ Local and Proper/Production setup
 
 ## Production Deployment Requirements
 * `terraform` - https://www.terraform.io/
+* `aws-iam-authenticator`  - https://docs.aws.amazon.com/eks/latest/userguide/install-aws-iam-authenticator.html
 
 # Quick Start
 
