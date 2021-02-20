@@ -28,6 +28,8 @@ Local and Proper/Production setup
 
 ## Minikube setup (OSX)
 
+Make sure you are not using a VPN. It may interfere with Minikube.
+
 Start `minikube`, configure it with your vm-driver of choice and resources. Keep in mind that a big elasticsearch cluster might require more than the default amount of `--memory`.
 
 All the commands are assuming your current working directory is the root of this repository.
